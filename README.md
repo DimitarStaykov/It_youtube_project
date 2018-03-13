@@ -12,7 +12,8 @@ User
 - uploaded
 - @
 - name
-____________
+
+
 
 delete "uploaded" videos
 remove favourites
@@ -24,7 +25,8 @@ Admin
 - @ 
 - name
 - basic/master priveleges 
-______________
+
+
 
 delete videos
 ban users
