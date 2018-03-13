@@ -7,6 +7,7 @@ OOP
 
 Classes 
 
+=========================
 User
 - favourite
 - uploaded
@@ -20,6 +21,7 @@ remove favourites
 change name/e-mail
 
 =========================
+
 Admin
 
 - @ 
