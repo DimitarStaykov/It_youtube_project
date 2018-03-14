@@ -1,6 +1,6 @@
 package youtube;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class User {
@@ -11,8 +11,12 @@ public class User {
 	private String email;
 	private Set<User> subscriberList;
 	private Set<Video> favouriteVideoList;
-	private Set<PlayList> playLists;
+	private List<PlayList> playLists;
 	private Set<Video> uploadedVideos;
+	private Set<Video> likedVideos;
+	private Set<Video> dislikedVideos;
+	private Set<Comment> likedComments;
+	private Set<Comment> dislikedComments;
 	private boolean loggedIn;
 	private final int minNameLength = 6;
 	private final int maxNameLength = 20;
@@ -47,51 +51,148 @@ public class User {
 	}
 
 	public void changePassword(String newPassword) {
-		
+		if(newPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")) {
+			this.password = newPassword;
+			System.out.println("Your password has been changed.");
+			return;
+		}
+		System.out.println("There was a problem while changing your password, try again.");
 	}
 	
 	public void changeEmail(String newEmail) {
-		
+		if(emailCheck(newEmail) && !youtube.existingEmail(newEmail)) {
+			this.email = newEmail;
+			System.out.println("Email changed successfully");
+			return;
+		}
+		System.out.println("Your email is invalid or registered by another user.");
 	}
 	
 	public void subscribeTo(User user) {
-		
+		if(user != null) {
+			this.subscriberList.add(user);
+		}
+	}
+	
+	public void unsubscribeFrom(User user) {
+		if(user != null && this.subscriberList.contains(user)) {
+			this.subscriberList.remove(user);
+		}
 	}
 	
 	public void comment(String commentMsg, Video video) {
-		
+		if(video != null && commentMsg != null && !commentMsg.isEmpty()) {
+			video.addComment(new Comment(commentMsg));
+		}
+		else {
+			System.out.println("Invalid comment or video.");
+		}
 	}
 	
 	public void reply(String replyMsg, Comment comment) {
-		
+		if(replyMsg != null && !replyMsg.isEmpty() && comment != null) {
+			comment.addComment(new Comment(replyMsg));
+		}
 	}
 	
 	public void like(Video video) {
-		
+		if(video == null) {
+			return;
+		}
+		//if liked already, remove the like..
+		if(this.likedVideos.contains(video)) {
+			video.decreaseLikes();
+			return;
+		}
+		//if disliked, remove the dislike and add a like
+		if(this.dislikedVideos.contains(video)) {
+			video.decreaseDislikes();
+			video.increaseLikes();
+			return;
+		}
+		video.increaseLikes();
+		this.likedVideos.add(video);
 	}
 	
 	public void like(Comment comment) {
-		
+		if(comment == null) {
+			return;
+		}
+		//if liked already, remove the like..
+		if(this.likedComments.contains(comment)) {
+			comment.decreaseLikes();
+			return;
+		}
+		//if disliked, remove the dislike and add a like
+		if(this.dislikedComments.contains(comment)) {
+			comment.decreaseDislikes();
+			comment.increaseLikes();
+			return;
+		}
+		comment.increaseLikes();
+		this.likedComments.add(comment);
 	}
 	
 	public void dislike(Video video) {
-		
+		if(video == null) {
+			return;
+		}
+		if(this.dislikedVideos.contains(video)) {
+			video.decreaseDislikes();
+		}
+		if(this.likedVideos.contains(video)) {
+			video.decreaseLikes();
+			video.increaseDislikes();
+			return;
+		}
+		video.increaseDislikes();
+		this.dislikedVideos.add(video);
 	}
 	
 	public void dislike(Comment comment) {
-		
+		if(comment == null) {
+			return;
+		}
+		if(this.dislikedComments.contains(comment)) {
+			comment.decreaseDislikes();
+		}
+		if(this.likedComments.contains(comment)) {
+			comment.decreaseLikes();
+			comment.increaseDislikes();
+			return;
+		}
+		comment.increaseDislikes();
+		this.dislikedComments.add(comment);
 	}
 	
 	public void addVideoToPlayList(PlayList playList, Video video) {
-		
+		if(playList == null || !this.playLists.contains(playList)) {
+			System.out.println("You don't have such playlist.");
+		}
+		if(video != null) {
+			playList.addVideo(video);
+		}
 	}
 
 	public void removeVideoFromPlayList(PlayList playList, Video video) {
-		
+		if(playList == null || !this.playLists.contains(playList)) {
+			System.out.println("You don't have such playlist.");
+		}
+		if(playList.getVideos().contains(video)) {
+			playList.removeVideo(video);
+		}
 	}
 	
 	public void logOut() {
-		
+		this.loggedIn = false;
+	}
+	
+	private boolean emailCheck(String email) {
+		String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+		if(email.matches(regex)) {
+			return true;
+		}
+		return false;
 	}
 	
 	private boolean nameCheck(String name) {
