@@ -10,7 +10,7 @@ public class User {
 	private String password;
 	private String email;
 	private Set<User> subscriberList;
-	private Set<Video> favouriteVideoList;
+	private Set<Video> favouriteVideoList; // Favourites realno moje da e prosto PlayList object
 	private List<PlayList> playLists;
 	private Set<Video> uploadedVideos;
 	private Set<Video> likedVideos;
