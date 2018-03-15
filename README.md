@@ -7,6 +7,13 @@ OOP
 
 Classes 
 
+Design patterns
+
+ - Observer - notification for new videos and subscribers 
+ - Singleton - for Master admin
+ - Youtube - class to be a facade, everything to go through it 
+
+
 =========================
 
 User
