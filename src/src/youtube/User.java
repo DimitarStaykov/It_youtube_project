@@ -21,6 +21,14 @@ public class User {
 	private final int minNameLength = 6;
 	private final int maxNameLength = 20;
 	
+	//possible info for separate class , To be discussed further
+	
+	private Set<Video> recentlyWatched; // can be default playlist object created with the user
+					   //  we add a pointer after a video is watched
+	private Set<Comments> recentComments; // same principle as with videos, pointer to every comment is added here
+	
+	private Set<String> searchInputs; // a collection for search inputs 
+	
 	public void upload(Video video) {
 		if(video == null) {
 			System.out.println("Couldn't add the video, try again.");
