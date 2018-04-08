@@ -1,5 +1,10 @@
 package youtube;
 
-public class Comment {
+public class Comment extends Post{
 
+	
+	public void viewReplies() {
+		
+	}
+	
 }
