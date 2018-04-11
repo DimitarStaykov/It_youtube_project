@@ -6,6 +6,18 @@ public class YouTube {
 
 	private Set<User> users;
 	private Set<Video> videos;
+	private static YouTube youtube;
+	
+	public static YouTube getInstance() {
+		if(youtube == null) {
+			youtube = new YouTube();
+		}
+		return youtube;
+	}
+	
+	private YouTube() {
+		
+	}
 	
 	public boolean upload(Video video) {
 		if(this.videos.contains(video)) {
@@ -46,12 +58,8 @@ public class YouTube {
 	}
 	
 
-	public boolean existingUserName(String name) {
-		for (User user : users) {
-			if(user.getName().equals(name)) {
-				return true;
-			}
-		}
+	public boolean existingEmail(String newEmail) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 	

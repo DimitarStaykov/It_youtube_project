@@ -1,7 +1,16 @@
 package youtube;
 
-public class Video extends Post{
+import java.util.Date;
+import java.util.Set;
 
+public class Video {
+	
+	private int likes;
+	private int dislikes;
+	private Set<Comment> comments;
+	private Date date;
+	private User postedBy;
+	private boolean isEdited;
 	private String title;
 	private double views;
 	private int durationInSeconds;
@@ -55,6 +64,31 @@ public class Video extends Post{
 		} else if (!title.equals(other.title))
 			return false;
 		return true;
+	}
+
+	public void addComment(Comment comment) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void decreaseLikes() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void decreaseDislikes() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void increaseLikes() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void increaseDislikes() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

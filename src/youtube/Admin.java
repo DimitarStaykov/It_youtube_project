@@ -9,9 +9,16 @@ public class Admin extends User{
     // admin koito da moje da maha admini ? 
     
     
-    boolean isMaster = false;
+    public Admin(int id, String username, String email, String password) {
+		super(id, username, email, password);
+		// TODO Auto-generated constructor stub
+	}
+
+	boolean isMaster = false;
     
-    private void removeUser();
+    private void removeUser(){
+    	
+    }
     
     
     

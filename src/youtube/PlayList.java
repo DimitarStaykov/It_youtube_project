@@ -1,12 +1,18 @@
 package youtube;
 
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 public class PlayList {
   
   private String name;
   private int numberOfVideos;
   private User user;
-  private ArrayList<Video> videos;
-  private boolean private; //if not private -> public
+  private Set<Video> videos;
+  private boolean isPrivate; //if not private -> public
   private Date date;
   
   // structurata moje da trqbwa da se promeni
@@ -18,9 +24,9 @@ public class PlayList {
       this.name = name;
       this.numberOfVideos = 0;
       this.user = user;
-      this.videos = new Arraylist<Video>();
-      this.private = status;
-      this.date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date);
+      this.videos = new HashSet<>();
+      this.isPrivate = status;
+     // this.date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date);
   }
   
   private void changeName(String newName){
@@ -28,12 +34,12 @@ public class PlayList {
   }
  
   
-  private void addVideo(Video video){
+  public void addVideo(Video video){
     videos.add(video);
     numberOfVideos++;
   }
   
-  private void removeVideo(Video video){
+  public void removeVideo(Video video){
     // To DO
     // think of a way to remove a video that can be found more than once
     // and remove a specific one 
@@ -41,12 +47,17 @@ public class PlayList {
   }
   
   private void setToPublic(){
-    this.private = false;
+    this.isPrivate = false;
   }
   
   private void setToPrivate(){
-    this.private = true;
+    this.isPrivate = true;
   }
+
+public Set<Video> getVideos() {
+	// TODO Auto-generated method stub
+	return Collections.unmodifiableSet(videos);
+}
   
 
 }

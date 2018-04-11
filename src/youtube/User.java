@@ -6,7 +6,8 @@ import java.util.Set;
 public class User {
 	
 	private static YouTube youtube;
-	private String name;
+	private int id;
+	private String username;
 	private String password;//bcrypt
 	private String email;
 	private Set<User> subscriberList;
@@ -25,9 +26,16 @@ public class User {
 	
 	private Set<Video> recentlyWatched; // can be default playlist object created with the user
 					   //  we add a pointer after a video is watched
-	private Set<Comments> recentComments; // same principle as with videos, pointer to every comment is added here
-	
+	private Set<Comment> recentComments; // same principle as with videos, pointer to every comment is added here
 	private Set<String> searchInputs; // a collection for search inputs 
+	
+	
+	public User(int id, String username, String email, String password) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+	
 	
 	public void upload(Video video) {
 		if(video == null) {
@@ -49,15 +57,17 @@ public class User {
 		System.out.println("You've deleted this video from youtube.");
 	}
 	
-	public void changeName(String newName) {
-		if(nameCheck(newName)) {
-			this.name = newName;
-		}
-		else {
-			System.out.println("Your username couldn't be changed.");
-		}
-	}
-
+	//done
+//	public void changeName(String newName) {
+//		if(nameCheck(newName)) {
+//			this.username = newName;
+//		}
+//		else {
+//			System.out.println("Your username couldn't be changed.");
+//		}
+//	}
+	
+	//done
 	public void changePassword(String newPassword) {
 		if(newPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")) {
 			this.password = newPassword;
@@ -67,6 +77,7 @@ public class User {
 		System.out.println("There was a problem while changing your password, try again.");
 	}
 	
+	//done
 	public void changeEmail(String newEmail) {
 		if(emailCheck(newEmail) && !youtube.existingEmail(newEmail)) {
 			this.email = newEmail;
@@ -103,6 +114,7 @@ public class User {
 		}
 	}
 	
+	//done
 	public void like(Video video) {
 		if(video == null) {
 			return;
@@ -120,7 +132,8 @@ public class User {
 		}
 		video.increaseLikes();
 		this.likedVideos.add(video);
-	}
+	}	
+	//done
 	
 	public void like(Comment comment) {
 		if(comment == null) {
@@ -140,7 +153,7 @@ public class User {
 		comment.increaseLikes();
 		this.likedComments.add(comment);
 	}
-	
+	//done
 	public void dislike(Video video) {
 		if(video == null) {
 			return;
@@ -156,7 +169,7 @@ public class User {
 		video.increaseDislikes();
 		this.dislikedVideos.add(video);
 	}
-	
+	//done
 	public void dislike(Comment comment) {
 		if(comment == null) {
 			return;
@@ -172,7 +185,7 @@ public class User {
 		comment.increaseDislikes();
 		this.dislikedComments.add(comment);
 	}
-	
+	//done
 	public void addVideoToPlayList(PlayList playList, Video video) {
 		if(playList == null || !this.playLists.contains(playList)) {
 			System.out.println("You don't have such playlist.");
@@ -182,6 +195,7 @@ public class User {
 		}
 	}
 
+	//done
 	public void removeVideoFromPlayList(PlayList playList, Video video) {
 		if(playList == null || !this.playLists.contains(playList)) {
 			System.out.println("You don't have such playlist.");
@@ -195,6 +209,7 @@ public class User {
 		this.loggedIn = false;
 	}
 	
+	//done
 	private boolean emailCheck(String email) {
 		String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 		if(email.matches(regex)) {
@@ -202,17 +217,17 @@ public class User {
 		}
 		return false;
 	}
-	
-	private boolean nameCheck(String name) {
-		if(name != null 
-				&& name.length() >= this.minNameLength 
-				&& name.length() <= this.maxNameLength 
-				&& !youtube.existingUserName(name)){
-			return true;
-		}
-		return false;
-	}
-	
+	//done
+//	private boolean nameCheck(String name) {
+//		if(name != null 
+//				&& name.length() >= this.minNameLength 
+//				&& name.length() <= this.maxNameLength 
+//				&& !youtube.existingUserName(name)){
+//			return true;
+//		}
+//		return false;
+//	}
+	//same
 	private boolean isLogged() {
 		if(!this.loggedIn) {
 			//redirect to register page
@@ -222,7 +237,7 @@ public class User {
 	}
 
 	public String getName() {
-		return name;
+		return username;
 	}
 
 	public String getEmail() {
@@ -235,7 +250,7 @@ public class User {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -253,10 +268,10 @@ public class User {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}
